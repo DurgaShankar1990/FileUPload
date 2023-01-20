@@ -1,0 +1,54 @@
+
+   const fileUpload = async (event) => {
+      var folderId = "49857623460"
+      event.preventDefault();
+      if (document.querySelector(".hs-input[type=file]").value != '') {
+         for (let i = 0; i < document.querySelector(".hs-input[type=file]").files.length; i++) {
+            if (document.querySelector(".hs-input[type=file]").files[i].size < 1000000) {
+               let fileData = document.querySelector(".hs-input[type=file]").files[i];      
+               
+               let form = new FormData();
+               form.append("file", fileData);
+               form.append("folderId", folderId);
+               form.append("options",'{\n  "access":  "PUBLIC_INDEXABLE",\n"overwrite": true,\n"duplicateValidationStrategy": "RETURN_EXISTING",\n"duplicateValidationScope": "EXACT_FOLDER"\n}');
+
+               for (let [key, val] of form.entries()) {
+                  console.log(key, val);
+               }
+
+
+               let reader = new FileReader();
+               reader.readAsDataURL(fileData)
+               reader.onload = function() {
+                  const URL = "/_hcms/api/fileUploadTest-point"
+                  const config = {
+                     url: URL,
+                     method : 'POST',
+                     headers: {
+                        'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                        'Content-Type': 'application/json',
+                     },
+                     data : { 'imgData': reader.result , 'fileName': fileData.name }
+                  }
+                  axios(config).then(function(response) {
+                     console.log(response.data)
+                  }).catch(function(error) {
+                     console.log( JSON.stringify(error))
+                  });
+               };
+            } else {
+               document.getElementById('maxFileSizeWarningCnt').style.display = "block"
+            }
+         }
+      }
+   }
+
+   $(window).load(function(){
+
+
+      $(".hs-input[type=file]").on('change', function(event) {
+         console.log("exe")
+         fileUpload(event)
+      });
+
+   })
