@@ -6,8 +6,7 @@ const fxConfig = ({ portal, autoupload } = {}) => {
   return {
     target: "node",
     entry: {
-      fetchLP: ["./src/app.functions/fetchLP.js"],
-      helloWorld: ["./src/app.functions/helloWorld.js"]
+      fileUploadTest: ["./src/app.functions/fileUploadTest.js"]
     },
     output: {
       path: path.resolve(__dirname, "dist"),
@@ -22,7 +21,7 @@ const fxConfig = ({ portal, autoupload } = {}) => {
         portal,
         autoupload,
         src: "dist",
-        dest: "cms-webpack-serverless-boilerplate",
+        dest: "cms-webpack-serverless-ds",
       }),
       new CopyWebpackPlugin({ patterns: [
         { from: "src/app.functions/serverless.json", to: "app.functions/serverless.json"},

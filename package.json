@@ -13,10 +13,19 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "start": "webpack --watch --env.autoupload --mode production",
-    "build": "webpack --mode production",
-    "deploy": "hs upload dist cms-webpack-serverless-boilerplate",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && webpack --watch --env.autoupload --mode production",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && webpack --mode production",
+    "deploy": "SET NODE_OPTIONS=--openssl-legacy-provider && hs upload dist cms-webpack-serverless-boilerplate",
     "lint": "eslint src && prettier --check 'src/**/*.js' 'src/**/*.json'",
     "prettier:write": "prettier --write 'src/**/*.js' 'src/**/*.json'"
+  },
+  "dependencies": {
+    "atob": "^2.1.2",
+    "axios": "^1.2.2",
+    "file-api": "^0.10.4",
+    "form-data": "^4.0.0",
+    "formdata": "^0.10.4",
+    "node-blob": "^0.0.2",
+    "node-fetch": "^3.3.0"
   }
 }
